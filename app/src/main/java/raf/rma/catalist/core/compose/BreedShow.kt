@@ -38,7 +38,11 @@ import raf.rma.catalist.core.theme.separator
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 @ExperimentalMaterial3Api
-fun BreedShow(breedInfo: BreedInfo, modifier: Modifier) {
+fun BreedShow(
+    breedInfo: BreedInfo,
+    modifier: Modifier,
+    onClick: () -> Unit
+) {
 
     Surface (
         modifier = modifier.padding(horizontal = 24.dp, vertical = 0.dp)
@@ -90,7 +94,7 @@ fun BreedShow(breedInfo: BreedInfo, modifier: Modifier) {
                     modifier = Modifier.fillMaxWidth()
                 ){
                     OutlinedButton(
-                        onClick = { /*TODO*/ },
+                        onClick = { onClick() },
                         border = BorderStroke(1.dp, outline)
 
                     ) {
