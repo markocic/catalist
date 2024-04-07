@@ -1,4 +1,4 @@
-package raf.rma.catalist.ui.theme
+package raf.rma.catalist.core.theme
 
 import android.app.Activity
 import android.os.Build
@@ -16,9 +16,13 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-        primary = Purple80,
-        secondary = PurpleGrey80,
-        tertiary = Pink80
+    primary = primaryText,
+    secondary = secondary700,
+    tertiary = secondary100,
+    primaryContainer = background600,
+    background = background800,
+    onBackground = onBackground,
+
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -57,7 +61,7 @@ fun CatalistTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
+            window.statusBarColor = colorScheme.onBackground.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }
