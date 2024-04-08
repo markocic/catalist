@@ -3,6 +3,7 @@ package raf.rma.catalist.breeds.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.getAndUpdate
@@ -18,17 +19,27 @@ data class BreedsListViewModel(
     val state = _state.asStateFlow()
 
     init {
+        fetchBreeds()
+    }
 
+    fun fetchBreeds() {
+        _state.getAndUpdate { it.copy(loading = true) }
         viewModelScope.launch {
-            val breeds = withContext(Dispatchers.IO) {
-                repository.fetchAllBreeds()
-            }
+            try {
+                delay(2000)
+                val breeds = withContext(Dispatchers.IO) {
+                    repository.fetchAllBreeds()
+                }
 
-            _state.getAndUpdate {
-                it.copy(items = breeds)
+                _state.getAndUpdate {
+                    it.copy(items = breeds)
+                }
+            } catch (error: Exception) {
+                error.printStackTrace()
+            } finally {
+                _state.getAndUpdate { it.copy(loading = false) }
             }
 
         }
-
     }
 }
