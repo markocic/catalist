@@ -83,7 +83,9 @@ fun BreedsDetailsScreen(
                     .padding(it)
                     .padding(horizontal = 0.dp, vertical = 24.dp)
             ) {
-                state.breed?.name?.let { it1 -> Text(it1, color = primaryText) }
+                if (state.breed != null) {
+                    BreedsDetailsItem(breed = state.breed)
+                }
             }
         }
     )
