@@ -1,4 +1,4 @@
-package raf.rma.catalist.core.compose
+package raf.rma.catalist.breeds.list
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
