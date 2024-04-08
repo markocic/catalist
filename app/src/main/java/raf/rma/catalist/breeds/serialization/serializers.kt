@@ -16,7 +16,10 @@ class CommaSeparatedListSerializer: KSerializer<List<String>> {
     )
 
     override fun deserialize(decoder: Decoder): List<String> {
-        return decoder.decodeString().split(",").map { it.trim() }
+        return decoder.decodeString()
+            .split(",")
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
     }
 
     override fun serialize(encoder: Encoder, value: List<String>) {
