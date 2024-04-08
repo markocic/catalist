@@ -14,14 +14,22 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import raf.rma.catalist.breeds.list.BreedsListViewModel
+import raf.rma.catalist.breeds.repository.BreedsRepository
 import raf.rma.catalist.core.compose.BreedShow
 import raf.rma.catalist.core.compose.Header
+import raf.rma.catalist.core.theme.primaryText
 import raf.rma.catalist.core.theme.separator
 
 
@@ -33,9 +41,23 @@ fun NavGraphBuilder.breedsDetailsScreen(
     val dataId = navBackStackEntry.arguments?.getString("id")
         ?: throw IllegalArgumentException("id is required.")
 
-    println(dataId)
 
-    BreedsDetailsScreen(navController = navController)
+    val viewModel = viewModel<BreedsDetailsViewModel>(
+        factory = object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return BreedsDetailsViewModel(breedId = dataId) as T
+            }
+
+        }
+    )
+
+    val state by viewModel.state.collectAsState()
+
+    BreedsDetailsScreen(
+        state = state,
+        navController = navController
+    )
 
 }
 
@@ -43,6 +65,7 @@ fun NavGraphBuilder.breedsDetailsScreen(
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun BreedsDetailsScreen(
+    state: BreedsDetailsState,
     navController: NavController,
 ) {
 
@@ -57,9 +80,10 @@ fun BreedsDetailsScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
+                    .padding(it)
                     .padding(horizontal = 0.dp, vertical = 24.dp)
             ) {
-                Text("test")
+                state.breed?.name?.let { it1 -> Text(it1, color = primaryText) }
             }
         }
     )
