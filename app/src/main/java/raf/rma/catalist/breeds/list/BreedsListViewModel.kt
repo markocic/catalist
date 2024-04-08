@@ -26,7 +26,6 @@ data class BreedsListViewModel(
         _state.getAndUpdate { it.copy(loading = true) }
         viewModelScope.launch {
             try {
-                delay(2000)
                 val breeds = withContext(Dispatchers.IO) {
                     repository.fetchAllBreeds()
                 }
