@@ -15,6 +15,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -22,11 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import raf.rma.catalist.breeds.list.BreedsListViewModel
-import raf.rma.catalist.breeds.repository.BreedsRepository
 import raf.rma.catalist.core.compose.Header
-import raf.rma.catalist.core.theme.primaryText
-import raf.rma.catalist.core.theme.separator
 
 
 fun NavGraphBuilder.breedsDetailsScreen(
@@ -49,10 +47,12 @@ fun NavGraphBuilder.breedsDetailsScreen(
     )
 
     val state by viewModel.state.collectAsState()
+    val uriHandler = LocalUriHandler.current
 
     BreedsDetailsScreen(
         state = state,
-        navController = navController
+        navController = navController,
+        uriHandler = uriHandler,
     )
 
 }
@@ -63,6 +63,7 @@ fun NavGraphBuilder.breedsDetailsScreen(
 fun BreedsDetailsScreen(
     state: BreedsDetailsState,
     navController: NavController,
+    uriHandler: UriHandler
 ) {
 
     Scaffold(
@@ -79,8 +80,11 @@ fun BreedsDetailsScreen(
                     .padding(it)
                     .padding(horizontal = 0.dp, vertical = 24.dp)
             ) {
-                if (state.breed != null) {
-                    BreedsDetailsItem(breed = state.breed)
+                if (state.breed?.wikiUrl != null) {
+                    BreedsDetailsItem(
+                        breed = state.breed,
+                        onWikiClick = { uriHandler.openUri(state.breed.wikiUrl) }
+                    )
                 }
             }
         }

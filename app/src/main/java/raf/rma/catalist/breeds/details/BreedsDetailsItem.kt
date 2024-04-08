@@ -1,17 +1,13 @@
 package raf.rma.catalist.breeds.details
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.SuggestionChip
@@ -31,13 +27,13 @@ import coil.compose.AsyncImage
 import raf.rma.catalist.breeds.model.BreedsModel
 import raf.rma.catalist.core.theme.Typography
 import raf.rma.catalist.core.theme.accentText
-import raf.rma.catalist.core.theme.outline
 import raf.rma.catalist.core.theme.primaryText
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun BreedsDetailsItem(
-    breed: BreedsModel
+    breed: BreedsModel,
+    onWikiClick: () -> Unit,
 ) {
     FlowColumn(
         verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.Top),
@@ -112,7 +108,7 @@ fun BreedsDetailsItem(
                 style = Typography.bodyLarge.copy(color = primaryText),
             )
             Text(
-                "Weight: from ${breed.weight.metric.from} to ${breed.weight.metric.to} years",
+                "Weight: from ${breed.weight.metric.from} kg to ${breed.weight.metric.to} kg",
                 style = Typography.bodyLarge.copy(color = primaryText),
             )
             Text(
@@ -124,7 +120,7 @@ fun BreedsDetailsItem(
                 modifier = Modifier.fillMaxWidth()
             ){
                 TextButton(
-                    onClick = { /* TODO(marko): redirect to browser, wikipedia page */ },
+                    onClick =  { onWikiClick() },
                 ) {
                     Text(text = "read on wikipedia", color = accentText)
 
