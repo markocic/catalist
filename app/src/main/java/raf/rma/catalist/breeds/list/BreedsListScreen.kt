@@ -3,10 +3,8 @@ package raf.rma.catalist.breeds.list
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,14 +12,25 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import raf.rma.catalist.breeds.api.BreedsApi
 import raf.rma.catalist.breeds.domain.BreedInfo
+import raf.rma.catalist.breeds.model.BreedsApiModel
+import raf.rma.catalist.breeds.repository.BreedsRepository
 import raf.rma.catalist.core.compose.BreedShow
 import raf.rma.catalist.core.compose.Header
 import raf.rma.catalist.core.theme.separator
@@ -33,23 +42,10 @@ fun NavGraphBuilder.breedsListScreen(
     navController: NavController,
 ) = composable(route = route) {
 
-    val item1 = BreedInfo(
-        name = "Abyssinian",
-        altNames = "",
-        description = "The Abyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.",
-        temperament = listOf("Active", "Energetic", "Independent"),
-        imageURL = "https://cdn2.thecatapi.com/images/xnzzM6MBI.jpg"
-    )
-    val item2 = BreedInfo(
-        name = "Abyssinian 1",
-        altNames = "",
-        description = "The Abyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.",
-        temperament = listOf("Active", "Energetic", "Independent"),
-        imageURL = "https://cdn2.thecatapi.com/images/xnzzM6MBI.jpg"
-    )
+    val viewModel = viewModel<BreedsListViewModel>()
+    val state by viewModel.state.collectAsState()
 
-    val breedsListState = BreedsListState(items = listOf(item1, item2))
-    BreedsListScreen(navController, breedsListState)
+    BreedsListScreen(navController, state)
 
 }
 
@@ -59,29 +55,31 @@ fun NavGraphBuilder.breedsListScreen(
 @ExperimentalMaterial3Api
 fun BreedsListScreen(
     navController: NavController,
-    breedsListState: BreedsListState
+    state: BreedsListState
 ) {
     Scaffold(
         topBar = {  Header(
             onBack = { navController.navigateUp() },
             onSearch = { Log.println(Log.DEBUG, "TESTING", "search") }
 
-        )  },
-        content = {
-            FlowColumn(
-                verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
-                modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 0.dp, vertical = 24.dp)
-            ) {
-                BreedShow(breedInfo = breedsListState.items[0], modifier = Modifier.padding(it))
-                Divider(Modifier.fillMaxWidth(), color = separator)
-                BreedShow(breedInfo = breedsListState.items[0], modifier = Modifier.padding(0.dp))
-                Divider(Modifier.fillMaxWidth(), color = separator)
-                BreedShow(breedInfo = breedsListState.items[0], modifier = Modifier.padding(0.dp))
+        )  }
+    ) {
+        FlowColumn(
+            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(it)
+                .padding(vertical = 24.dp)
+        ) {
+            state.items.forEach {item ->
+                BreedShow(
+                    breedInfo = item,
+                    modifier = Modifier.padding(0.dp),
+                    onClick = { navController.navigate("breedsdetails/${item.id}") })
+                HorizontalDivider(Modifier.fillMaxWidth(), color = separator)
             }
         }
-    )
+    }
 
 
 }
