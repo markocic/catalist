@@ -65,10 +65,12 @@ fun BreedShow(
                         style = Typography.titleLarge
 
                     )
-                    Text(
-                        text = breed.name,
-                        color = mutedText,
-                    )
+                    if (breed.altNames.isNotEmpty()) {
+                        Text(
+                            text = breed.altNames.joinToString(", "),
+                            color = mutedText,
+                        )
+                    }
                 }
                 FlowRow (
                     modifier = Modifier.fillMaxWidth(),
