@@ -2,6 +2,7 @@ package raf.rma.catalist.core.compose
 
 import android.graphics.Insets
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -24,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import raf.rma.catalist.breeds.domain.BreedInfo
@@ -45,14 +48,18 @@ fun BreedShow(
 ) {
 
     Surface (
-        modifier = modifier.padding(horizontal = 24.dp, vertical = 0.dp)
+        modifier = modifier
+            .padding(horizontal = 24.dp, vertical = 0.dp),
+        shape = RoundedCornerShape(12.dp)
+
     ){
         Card(
             colors = CardDefaults.cardColors(
                 containerColor = background600,
             ),
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(),
+
         ) {
             AsyncImage(model = breedInfo.imageURL, contentDescription = "breed image")
             FlowColumn(
