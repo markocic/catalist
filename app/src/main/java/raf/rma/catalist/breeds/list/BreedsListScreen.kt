@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
@@ -19,18 +18,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import raf.rma.catalist.breeds.api.BreedsApi
-import raf.rma.catalist.breeds.domain.BreedInfo
-import raf.rma.catalist.breeds.model.BreedsApiModel
-import raf.rma.catalist.breeds.repository.BreedsRepository
 import raf.rma.catalist.core.compose.BreedShow
 import raf.rma.catalist.core.compose.Header
 import raf.rma.catalist.core.theme.separator
