@@ -17,6 +17,8 @@ data class BreedsModel(
     val description: String,
     @Serializable(with = CommaSeparatedListSerializer::class)
     val temperament: List<String>,
+    @SerialName("reference_image_id")
+    val imageId: String = "",
     val image: BreedsImage? = null,
     @SerialName("origin")
     val country: String,
