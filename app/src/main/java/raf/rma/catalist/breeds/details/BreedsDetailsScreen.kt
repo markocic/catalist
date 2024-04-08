@@ -33,6 +33,8 @@ fun NavGraphBuilder.breedsDetailsScreen(
     val dataId = navBackStackEntry.arguments?.getString("id")
         ?: throw IllegalArgumentException("id is required.")
 
+    println(dataId)
+
     BreedsDetailsScreen(navController = navController)
 
 }
