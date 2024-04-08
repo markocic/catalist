@@ -64,7 +64,7 @@ fun BreedsListScreen(
         ) {
             state.items.forEach {item ->
                 BreedShow(
-                    breedInfo = item,
+                    breed = item,
                     modifier = Modifier.padding(0.dp),
                     onClick = { navController.navigate("breedsdetails/${item.id}") })
                 HorizontalDivider(Modifier.fillMaxWidth(), color = separator)

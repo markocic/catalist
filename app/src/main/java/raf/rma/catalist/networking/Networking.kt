@@ -10,7 +10,7 @@ import retrofit2.Retrofit
 val okHttpClient = OkHttpClient.Builder()
     .addInterceptor {
         val updatedRequest = it.request().newBuilder()
-            .addHeader("x-api-key", "")
+            .addHeader("x-api-key", "live_STLbhELfIqqQbiclrqfaxnER6uXcxFYpkPP6kQWBCnCrIrRjIuApFDT3kDACJ76p")
             .build()
         it.proceed(updatedRequest)
     }

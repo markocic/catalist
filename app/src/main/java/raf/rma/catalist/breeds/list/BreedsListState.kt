@@ -1,7 +1,7 @@
 package raf.rma.catalist.breeds.list
 
-import raf.rma.catalist.breeds.domain.BreedInfo
+import raf.rma.catalist.breeds.model.BreedsModel
 
 data class BreedsListState (
-    val items: List<BreedInfo> = emptyList(),
+    val items: List<BreedsModel> = emptyList(),
 )

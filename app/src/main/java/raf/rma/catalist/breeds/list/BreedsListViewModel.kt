@@ -1,6 +1,5 @@
 package raf.rma.catalist.breeds.list
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -8,9 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import raf.rma.catalist.breeds.domain.BreedInfo
 import raf.rma.catalist.breeds.repository.BreedsRepository
 
 data class BreedsListViewModel(
@@ -21,25 +18,16 @@ data class BreedsListViewModel(
     val state = _state.asStateFlow()
 
     init {
-        val item1 = BreedInfo(
-            id = "abys",
-            name = "Abyssinian",
-            altNames = "",
-            description = "The Abyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.",
-            temperament = listOf("Active", "Energetic", "Independent"),
-            imageURL = "https://cdn2.thecatapi.com/images/xnzzM6MBI.jpg"
-        )
 
         viewModelScope.launch {
             val breeds = withContext(Dispatchers.IO) {
                 repository.fetchAllBreeds()
             }
 
-            println(breeds)
-        }
+            _state.getAndUpdate {
+                it.copy(items = breeds)
+            }
 
-        _state.getAndUpdate {
-            it.copy(items = listOf(item1, item1))
         }
 
     }
