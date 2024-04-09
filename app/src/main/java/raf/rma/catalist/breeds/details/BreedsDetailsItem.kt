@@ -55,14 +55,16 @@ fun BreedsDetailsItem(
                     ),
                 modifier = Modifier
             )
-            Text(
-                breed.altNames.joinToString(", "),
-                style = Typography.headlineSmall
-                    .copy(
-                        color = mutedText
-                    ),
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
+            if (breed.altNames.isNotEmpty()) {
+                Text(
+                    breed.altNames.joinToString(", "),
+                    style = Typography.headlineSmall
+                        .copy(
+                            color = mutedText
+                        ),
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+            }
         }
         FlowRow (
             horizontalArrangement = Arrangement.Center,
