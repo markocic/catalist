@@ -1,6 +1,7 @@
-package raf.rma.catalist.breeds.list
+package raf.rma.catalist.core.compose
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
@@ -50,7 +51,8 @@ fun BreedShow(
                 containerColor = background600,
             ),
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .clickable { onClick() },
 
         ) {
             AsyncImage(model = breed.image?.url, contentDescription = "breed image")
