@@ -39,4 +39,14 @@ class BreedsSearchViewModel(
             }
         }
     }
+
+    fun filter(name: String) {
+        _state.getAndUpdate {
+            it.copy(
+                results = it.results.filter { breed ->
+                    breed.name.contains(name, ignoreCase = true)
+                }
+            )
+        }
+    }
 }

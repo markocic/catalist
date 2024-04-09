@@ -51,7 +51,8 @@ fun NavGraphBuilder.breedsSearchScreen(
 
     BreedsSearchScreen(
         state = state,
-        navController = navController
+        navController = navController,
+        search =  viewModel::filter
     )
 }
 
@@ -60,6 +61,7 @@ fun NavGraphBuilder.breedsSearchScreen(
 fun BreedsSearchScreen(
     state: BreedsSearchState,
     navController: NavController,
+    search: (String) -> Unit
 ) {
 
     Scaffold(
@@ -92,7 +94,7 @@ fun BreedsSearchScreen(
                         )
                     ),
                     query = text,
-                    onSearch = { test(it) },
+                    onSearch = { search(text) },
                     active = false,
                     content = {},
                     trailingIcon = {
