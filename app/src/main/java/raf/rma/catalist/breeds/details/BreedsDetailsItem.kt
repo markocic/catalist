@@ -30,7 +30,7 @@ import raf.rma.catalist.core.theme.accentText
 import raf.rma.catalist.core.theme.mutedText
 import raf.rma.catalist.core.theme.primaryText
 
-@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BreedsDetailsItem(
     breed: BreedsModel,
@@ -142,7 +142,7 @@ fun BreedsDetailsItem(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun RangeIndicator(label: String, value: Int) {
     var sliderPosition by remember { mutableFloatStateOf(value.toFloat()) }
@@ -151,13 +151,14 @@ fun RangeIndicator(label: String, value: Int) {
     ) {
         Text(label, color = primaryText)
         Slider(
+            thumb = {},
             enabled = false,
             value = sliderPosition,
             onValueChange = { sliderPosition = it },
             colors = SliderDefaults.colors(
                 disabledThumbColor = accentText,
                 disabledActiveTrackColor = accentText,
-                disabledInactiveTrackColor = primaryText,
+                disabledInactiveTrackColor = Color.White,
             ),
             steps = 3,
             valueRange = 1f..5f
