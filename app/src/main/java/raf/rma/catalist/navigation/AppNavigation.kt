@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import raf.rma.catalist.breeds.details.breedsDetailsScreen
 import raf.rma.catalist.breeds.list.breedsListScreen
+import raf.rma.catalist.breeds.search.breedsSearchScreen
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -25,6 +26,10 @@ fun AppNavigation() {
         )
         breedsDetailsScreen(
             route = "breedsdetails/{id}",
+            navController = navController
+        )
+        breedsSearchScreen(
+            route = "search",
             navController = navController
         )
 
