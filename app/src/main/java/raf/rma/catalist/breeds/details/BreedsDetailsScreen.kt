@@ -69,7 +69,7 @@ fun BreedsDetailsScreen(
     Scaffold(
         topBar = {  Header(
             onBack = { navController.navigateUp() },
-            onSearch = { Log.println(Log.DEBUG, "TESTING", "search") }
+            onSearch = { navController.navigate("search") }
 
         )  },
         content = {
