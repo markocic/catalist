@@ -1,7 +1,6 @@
 package raf.rma.catalist.breeds.details
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
@@ -29,7 +28,9 @@ import raf.rma.catalist.core.compose.Header
 
 fun NavGraphBuilder.breedsDetailsScreen(
     route: String,
-    navController: NavController,
+    onBack: () -> Unit,
+    onSearch: () -> Unit,
+    onWiki: (String) -> Unit,
 ) = composable(route = route) {
         navBackStackEntry ->
     val dataId = navBackStackEntry.arguments?.getString("id")
@@ -47,12 +48,12 @@ fun NavGraphBuilder.breedsDetailsScreen(
     )
 
     val state by viewModel.state.collectAsState()
-    val uriHandler = LocalUriHandler.current
 
     BreedsDetailsScreen(
         state = state,
-        navController = navController,
-        uriHandler = uriHandler,
+        onBack = onBack,
+        onSearch = onSearch,
+        onWiki = onWiki,
     )
 
 }
@@ -62,15 +63,15 @@ fun NavGraphBuilder.breedsDetailsScreen(
 @Composable
 fun BreedsDetailsScreen(
     state: BreedsDetailsState,
-    navController: NavController,
-    uriHandler: UriHandler
+    onBack: () -> Unit,
+    onSearch: () -> Unit,
+    onWiki: (String) -> Unit,
 ) {
 
     Scaffold(
         topBar = {  Header(
-            onBack = { navController.navigateUp() },
-            onSearch = { navController.navigate("search") }
-
+            onBack = { onBack() },
+            onSearch = { onSearch() }
         )  },
         content = {
             FlowColumn(
@@ -83,7 +84,7 @@ fun BreedsDetailsScreen(
                 if (state.breed?.wikiUrl != null) {
                     BreedsDetailsItem(
                         breed = state.breed,
-                        onWikiClick = { uriHandler.openUri(state.breed.wikiUrl) }
+                        onWikiClick = { onWiki(state.breed.wikiUrl) }
                     )
                 }
             }

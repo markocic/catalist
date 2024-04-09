@@ -3,6 +3,7 @@ package raf.rma.catalist.breeds.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.getAndUpdate
@@ -17,10 +18,27 @@ class BreedsSearchViewModel(
     private val _state = MutableStateFlow(BreedsSearchState())
     val state = _state.asStateFlow()
 
+    private val events = MutableSharedFlow<SearchUiEvent>()
+    fun setEvent(event: SearchUiEvent) = viewModelScope.launch { events.emit(event) }
+
     init {
+        observeEvents()
         fetchInitialBreeds()
     }
 
+    private fun observeEvents() {
+        viewModelScope.launch {
+            events.collect {
+                when (it) {
+                    is SearchUiEvent.SearchSubmitted -> {
+                        filter(name = it.term)
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+    }
     private fun fetchInitialBreeds() {
         _state.getAndUpdate { it.copy(loading = true) }
         viewModelScope.launch {
@@ -30,7 +48,10 @@ class BreedsSearchViewModel(
                 }
 
                 _state.getAndUpdate {
-                    it.copy(results = breeds)
+                    it.copy(
+                        allBreeds = breeds,
+                        results = breeds
+                    )
                 }
             } catch (error: Exception) {
                 error.printStackTrace()
@@ -40,10 +61,10 @@ class BreedsSearchViewModel(
         }
     }
 
-    fun filter(name: String) {
+    private fun filter(name: String) {
         _state.getAndUpdate {
             it.copy(
-                results = it.results.filter { breed ->
+                results = it.allBreeds.filter { breed ->
                     breed.name.contains(name, ignoreCase = true)
                 }
             )

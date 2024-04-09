@@ -1,7 +1,6 @@
 package raf.rma.catalist.breeds.list
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
@@ -20,9 +19,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import raf.rma.catalist.core.compose.BreedShow
 import raf.rma.catalist.core.compose.Header
 import raf.rma.catalist.core.compose.IndeterminateCircularIndicator
 import raf.rma.catalist.core.theme.separator
@@ -31,13 +30,20 @@ import raf.rma.catalist.core.theme.separator
 @ExperimentalLayoutApi
 fun NavGraphBuilder.breedsListScreen(
     route: String,
-    navController: NavController,
+    onBack: () -> Unit,
+    onSearch: () -> Unit,
+    onMoreDetails: (String) -> Unit,
 ) = composable(route = route) {
 
     val viewModel = viewModel<BreedsListViewModel>()
     val state by viewModel.state.collectAsState()
 
-    BreedsListScreen(navController, state)
+    BreedsListScreen(
+        onBack = onBack,
+        onSearch = onSearch,
+        onMoreDetails = onMoreDetails,
+        state = state
+    )
 
 }
 
@@ -46,14 +52,15 @@ fun NavGraphBuilder.breedsListScreen(
 @ExperimentalLayoutApi
 @ExperimentalMaterial3Api
 fun BreedsListScreen(
-    navController: NavController,
+    onBack: () -> Unit,
+    onSearch: () -> Unit,
+    onMoreDetails: (String) -> Unit,
     state: BreedsListState
 ) {
     Scaffold(
         topBar = {  Header(
-            onBack = { navController.navigateUp() },
-            onSearch = { navController.navigate("search") }
-
+            onBack = { onBack() },
+            onSearch = { onSearch() }
         )  }
     ) {
         FlowColumn(
@@ -76,7 +83,7 @@ fun BreedsListScreen(
                     BreedShow(
                         breed = item,
                         modifier = Modifier.padding(0.dp),
-                        onClick = { navController.navigate("breedsdetails/${item.id}") })
+                        onClick = { onMoreDetails(item.id) })
                     HorizontalDivider(Modifier.fillMaxWidth(), color = separator)
                 }
             }
