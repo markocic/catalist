@@ -81,10 +81,10 @@ fun BreedsDetailsScreen(
                     .padding(it)
                     .padding(horizontal = 0.dp, vertical = 24.dp)
             ) {
-                if (state.breed?.wikiUrl != null) {
+                if (state.breed != null) {
                     BreedsDetailsItem(
                         breed = state.breed,
-                        onWikiClick = { onWiki(state.breed.wikiUrl) }
+                        onWikiClick = { onWiki(state.breed.wikiUrl!!) }
                     )
                 }
             }

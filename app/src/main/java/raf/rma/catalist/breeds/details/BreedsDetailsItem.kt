@@ -43,9 +43,10 @@ fun BreedsDetailsItem(
     ) {
         FlowColumn (
             verticalArrangement = Arrangement.spacedBy(6.dp),
-            horizontalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.Start,
             modifier = Modifier
                 .background(Color.Transparent)
+                .padding(horizontal = 16.dp)
                 .fillMaxWidth()
         ) {
             Text(
@@ -55,7 +56,7 @@ fun BreedsDetailsItem(
                         fontWeight = FontWeight.Bold,
                         color = accentText
                     ),
-                modifier = Modifier
+                modifier = Modifier.align(Alignment.Start)
             )
             if (breed.altNames.isNotEmpty()) {
                 Text(
@@ -64,7 +65,7 @@ fun BreedsDetailsItem(
                         .copy(
                             color = mutedText
                         ),
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    modifier = Modifier.align(Alignment.Start)
                 )
             }
         }
@@ -130,15 +131,17 @@ fun BreedsDetailsItem(
                 "Country origin: ${breed.country}",
                 style = Typography.bodyLarge.copy(color = primaryText),
             )
-            FlowRow (
-                horizontalArrangement = Arrangement.End,
-                modifier = Modifier.fillMaxWidth()
-            ){
-                TextButton(
-                    onClick =  { onWikiClick() },
-                ) {
-                    Text(text = "read on wikipedia", color = accentText)
+            if (breed.wikiUrl != null) {
+                FlowRow (
+                    horizontalArrangement = Arrangement.End,
+                    modifier = Modifier.fillMaxWidth()
+                ){
+                    TextButton(
+                        onClick = onWikiClick,
+                    ) {
+                        Text(text = "read on wikipedia", color = accentText)
 
+                    }
                 }
             }
         }
