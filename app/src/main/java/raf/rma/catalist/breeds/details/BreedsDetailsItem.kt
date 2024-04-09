@@ -86,10 +86,6 @@ fun BreedsDetailsItem(
                 .padding(horizontal = 12.dp)
                 .fillMaxWidth()
         ) {
-            Text(
-                "Country origin: ${breed.country}",
-                style = Typography.headlineSmall.copy(color = primaryText),
-            )
             FlowRow (
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start),
@@ -125,6 +121,10 @@ fun BreedsDetailsItem(
             )
             Text(
                 "Rare: ${breed.isRare}",
+                style = Typography.bodyLarge.copy(color = primaryText),
+            )
+            Text(
+                "Country origin: ${breed.country}",
                 style = Typography.bodyLarge.copy(color = primaryText),
             )
             FlowRow (
