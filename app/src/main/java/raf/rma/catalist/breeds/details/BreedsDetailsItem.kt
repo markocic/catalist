@@ -27,6 +27,7 @@ import coil.compose.AsyncImage
 import raf.rma.catalist.breeds.model.BreedsModel
 import raf.rma.catalist.core.theme.Typography
 import raf.rma.catalist.core.theme.accentText
+import raf.rma.catalist.core.theme.mutedText
 import raf.rma.catalist.core.theme.primaryText
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
@@ -38,7 +39,8 @@ fun BreedsDetailsItem(
     FlowColumn(
         verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.Top),
     ) {
-        FlowRow (
+        FlowColumn (
+            verticalArrangement = Arrangement.spacedBy(6.dp),
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier
                 .background(Color.Transparent)
@@ -52,6 +54,14 @@ fun BreedsDetailsItem(
                         color = accentText
                     ),
                 modifier = Modifier
+            )
+            Text(
+                breed.altNames.joinToString(", "),
+                style = Typography.headlineSmall
+                    .copy(
+                        color = mutedText
+                    ),
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             )
         }
         FlowRow (
