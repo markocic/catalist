@@ -24,6 +24,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import raf.rma.catalist.core.compose.Header
+import raf.rma.catalist.core.compose.IndeterminateCircularIndicator
 
 
 fun NavGraphBuilder.breedsDetailsScreen(
@@ -74,16 +75,18 @@ fun BreedsDetailsScreen(
             onSearch = { onSearch() }
         )  },
         content = {
-            FlowColumn(
-                verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
-                modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-                    .padding(it)
-                    .padding(horizontal = 0.dp, vertical = 24.dp)
-            ) {
-                if (state.breed != null) {
+            if (state.loading) {
+                IndeterminateCircularIndicator()
+            } else {
+                FlowColumn(
+                    verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .padding(it)
+                        .padding(horizontal = 0.dp, vertical = 24.dp)
+                ) {
                     BreedsDetailsItem(
-                        breed = state.breed,
+                        breed = state.breed!!,
                         onWikiClick = { onWiki(state.breed.wikiUrl!!) }
                     )
                 }
