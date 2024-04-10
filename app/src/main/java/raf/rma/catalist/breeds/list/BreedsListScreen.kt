@@ -1,32 +1,19 @@
 package raf.rma.catalist.breeds.list
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowColumn
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.ui.Alignment
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import raf.rma.catalist.core.compose.BreedDump
-import raf.rma.catalist.core.compose.BreedShow
 import raf.rma.catalist.core.compose.Container
 import raf.rma.catalist.core.compose.Header
 import raf.rma.catalist.core.compose.IndeterminateCircularIndicator
-import raf.rma.catalist.core.theme.separator
 
 @ExperimentalMaterial3Api
 @ExperimentalLayoutApi
@@ -49,7 +36,6 @@ fun NavGraphBuilder.breedsListScreen(
 
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 @ExperimentalLayoutApi
 @ExperimentalMaterial3Api

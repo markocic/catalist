@@ -20,7 +20,7 @@ fun BreedDump(
     onMoreDetails: (String) -> Unit
 ) {
     breeds.forEach {breed ->
-        BreedShow(
+        BreedItem(
             breed = breed,
             modifier = Modifier.padding(0.dp),
             onClick = { onMoreDetails(breed.id) }

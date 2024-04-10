@@ -1,17 +1,12 @@
 package raf.rma.catalist.breeds.search
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -24,21 +19,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import raf.rma.catalist.core.compose.BreedDump
-import raf.rma.catalist.core.compose.BreedShow
 import raf.rma.catalist.core.compose.Container
 import raf.rma.catalist.core.compose.Header
 import raf.rma.catalist.core.compose.IndeterminateCircularIndicator
 import raf.rma.catalist.core.theme.background600
 import raf.rma.catalist.core.theme.mutedText
 import raf.rma.catalist.core.theme.primaryText
-import raf.rma.catalist.core.theme.separator
 
 fun NavGraphBuilder.breedsSearchScreen(
     route: String,
