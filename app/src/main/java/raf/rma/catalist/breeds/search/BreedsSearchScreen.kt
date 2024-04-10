@@ -32,6 +32,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import raf.rma.catalist.core.compose.BreedShow
 import raf.rma.catalist.core.compose.Header
+import raf.rma.catalist.core.compose.IndeterminateCircularIndicator
 import raf.rma.catalist.core.theme.background600
 import raf.rma.catalist.core.theme.mutedText
 import raf.rma.catalist.core.theme.primaryText
@@ -72,65 +73,74 @@ fun BreedsSearchScreen(
             onSearch = onSearch
         )  },
         content = {
-            FlowColumn(
-                verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
-                modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-                    .padding(it)
-                    .padding(horizontal = 0.dp, vertical = 24.dp)
-            ) {
-                var text by rememberSaveable { mutableStateOf("") }
-
-                SearchBar(
+            if (state.loading) {
+                IndeterminateCircularIndicator()
+            }
+            else {
+                FlowColumn(
+                    verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp),
-                    colors = SearchBarDefaults.colors(
-                        containerColor = background600,
-                        inputFieldColors = SearchBarDefaults.inputFieldColors(
-                            focusedTextColor = primaryText,
-                            unfocusedTextColor = primaryText
+                        .verticalScroll(rememberScrollState())
+                        .padding(it)
+                        .padding(horizontal = 0.dp, vertical = 24.dp)
+                ) {
+                    Search(eventPublisher)
+                    Spacer(modifier = Modifier.padding(vertical = 3.dp))
+                    state.results.forEach {breed ->
+                        BreedShow(
+                            breed = breed,
+                            modifier = Modifier.padding(0.dp),
+                            onClick = { onMoreDetails(breed.id) }
                         )
-                    ),
-                    query = text,
-                    onSearch = {
-                        eventPublisher(
-                            SearchUiEvent.SearchSubmitted(term = text)
-                        )
-                   },
-                    active = false,
-                    content = {},
-                    trailingIcon = {
-                        IconButton(
-                            onClick = {
-                                eventPublisher(
-                                SearchUiEvent.SearchSubmitted(term = text)
-                            )
-                        }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Filled.Search,
-                                contentDescription = "search icon",
-                                tint = primaryText
-                            )
-
-                        }
-                    },
-                    onActiveChange = {},
-                    onQueryChange = { text = it },
-                    placeholder = { Text("Search...", color = mutedText) }
-
-                )
-                Spacer(modifier = Modifier.padding(vertical = 3.dp))
-                state.results.forEach {breed ->
-                    BreedShow(
-                        breed = breed,
-                        modifier = Modifier.padding(0.dp),
-                        onClick = { onMoreDetails(breed.id) }
-                    )
-                    HorizontalDivider(Modifier.fillMaxWidth(), color = separator)
+                        HorizontalDivider(Modifier.fillMaxWidth(), color = separator)
+                    }
                 }
             }
         }
+    )
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun Search(eventPublisher: (SearchUiEvent) -> Unit) {
+    var text by rememberSaveable { mutableStateOf("") }
+    SearchBar(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp),
+        colors = SearchBarDefaults.colors(
+            containerColor = background600,
+            inputFieldColors = SearchBarDefaults.inputFieldColors(
+                focusedTextColor = primaryText,
+                unfocusedTextColor = primaryText
+            )
+        ),
+        query = text,
+        onSearch = {
+            eventPublisher(
+                SearchUiEvent.SearchSubmitted(term = text)
+            )
+        },
+        active = false,
+        content = {},
+        trailingIcon = {
+            IconButton(
+                onClick = {
+                    eventPublisher(
+                        SearchUiEvent.SearchSubmitted(term = text)
+                    )
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = "search icon",
+                    tint = primaryText
+                )
+
+            }
+        },
+        onActiveChange = {},
+        onQueryChange = { text = it },
+        placeholder = { Text("Search...", color = mutedText) }
     )
 }
