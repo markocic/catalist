@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import raf.rma.catalist.core.compose.BreedDump
 import raf.rma.catalist.core.compose.BreedShow
 import raf.rma.catalist.core.compose.Container
 import raf.rma.catalist.core.compose.Header
@@ -68,16 +69,11 @@ fun BreedsListScreen(
             IndeterminateCircularIndicator()
         } else {
             Container(paddingValues = it) {
-                state.items.forEach {item ->
-                    BreedShow(
-                        breed = item,
-                        modifier = Modifier.padding(0.dp),
-                        onClick = { onMoreDetails(item.id) })
-                    HorizontalDivider(Modifier.fillMaxWidth(), color = separator)
-                }
+                BreedDump(
+                    breeds = state.items,
+                    onMoreDetails = onMoreDetails
+                )
             }
         }
     }
-
-
 }
