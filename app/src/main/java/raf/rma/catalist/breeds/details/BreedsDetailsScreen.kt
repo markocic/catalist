@@ -23,6 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import raf.rma.catalist.core.compose.Container
 import raf.rma.catalist.core.compose.Header
 import raf.rma.catalist.core.compose.IndeterminateCircularIndicator
 
@@ -78,12 +79,8 @@ fun BreedsDetailsScreen(
             if (state.loading) {
                 IndeterminateCircularIndicator()
             } else {
-                FlowColumn(
-                    verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
-                    modifier = Modifier
-                        .verticalScroll(rememberScrollState())
-                        .padding(it)
-                        .padding(horizontal = 0.dp, vertical = 24.dp)
+                Container(
+                    paddingValues = it
                 ) {
                     BreedsDetailsItem(
                         breed = state.breed!!,
