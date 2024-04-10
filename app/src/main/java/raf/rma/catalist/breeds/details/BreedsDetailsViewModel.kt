@@ -35,6 +35,9 @@ class BreedsDetailsViewModel constructor (
                 }
             } catch (error: Exception) {
                 error.printStackTrace()
+                _state.getAndUpdate {
+                    it.copy(error = error)
+                }
             } finally {
                 _state.getAndUpdate { it.copy(loading = false) }
             }

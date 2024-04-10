@@ -24,6 +24,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import raf.rma.catalist.core.compose.Container
+import raf.rma.catalist.core.compose.ErrorContainer
 import raf.rma.catalist.core.compose.Header
 import raf.rma.catalist.core.compose.IndeterminateCircularIndicator
 
@@ -78,7 +79,12 @@ fun BreedsDetailsScreen(
         content = {
             if (state.loading) {
                 IndeterminateCircularIndicator()
-            } else {
+            } else if (state.error != null) {
+                ErrorContainer(
+                    error = state.error
+                )
+            }
+            else {
                 Container(
                     paddingValues = it
                 ) {
