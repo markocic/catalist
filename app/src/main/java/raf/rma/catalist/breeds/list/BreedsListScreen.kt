@@ -63,6 +63,9 @@ fun BreedsListScreen(
             onSearch = { onSearch() }
         )  }
     ) {
+        if (state.loading) {
+            IndeterminateCircularIndicator()
+        } else {
         FlowColumn(
             verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
             modifier = Modifier
@@ -70,15 +73,6 @@ fun BreedsListScreen(
                 .padding(it)
                 .padding(vertical = 24.dp)
         ) {
-            if (state.loading) {
-                FlowColumn (
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth().fillMaxHeight()
-
-                ) {
-                    IndeterminateCircularIndicator()
-                }
-            } else {
                 state.items.forEach {item ->
                     BreedShow(
                         breed = item,
