@@ -26,6 +26,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import raf.rma.catalist.core.compose.BreedDump
 import raf.rma.catalist.core.compose.Container
+import raf.rma.catalist.core.compose.ErrorContainer
 import raf.rma.catalist.core.compose.Header
 import raf.rma.catalist.core.compose.IndeterminateCircularIndicator
 import raf.rma.catalist.core.theme.background600
@@ -69,6 +70,9 @@ fun BreedsSearchScreen(
         content = {
             if (state.loading) {
                 IndeterminateCircularIndicator()
+            }
+            if (state.error != null) {
+                ErrorContainer(error = state.error)
             }
             else {
                 Container(paddingValues = it) {
