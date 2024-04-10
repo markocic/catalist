@@ -22,16 +22,16 @@ class BreedsDetailsViewModel constructor (
         fetchBreed(breedId)
     }
 
-    fun fetchBreed(breed: String) {
+    private fun fetchBreed(breed: String) {
         _state.getAndUpdate { it.copy(loading = true) }
         viewModelScope.launch {
             try {
-                val breed = withContext(Dispatchers.IO) {
+                val result = withContext(Dispatchers.IO) {
                     repository.fetchBreed(breed)
                 }
 
                 _state.getAndUpdate {
-                    it.copy(breed = breed)
+                    it.copy(breed = result)
                 }
             } catch (error: Exception) {
                 error.printStackTrace()
